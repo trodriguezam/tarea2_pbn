@@ -12,7 +12,7 @@ struct cars{
 };
 
 struct mults {
-    char patente[7];
+    char *patente;
     int monto;
     char *paid;
 };
@@ -40,52 +40,79 @@ int main(){
     char *line = malloc(100);
     char *line2 = malloc(100);
     
-    int num = 0;
-    // fopen("vehiculos.txt", "r");
-    // while(fgets(line, 500, vehiculos)){
-    //     char *value = strtok(line, ",");
-    //     char *plate;
-    //     for (int i = 0; i < 6; i++){
-    //         if (i == 0) plate = value;
-    //         value = strtok(NULL, ",");
-    //     }
-    //     car[num].patente = plate;
-    //     num++;
-    // }
 
-printf("%s ", mult[2].patente);
-    struct mults mults;
+    int i = 0;
+    vehiculos = fopen("vehiculos.txt", "r");
+    while (fgets(line, 100, vehiculos)){
+        char *value = strtok(line, ",");
+        car[i].patente = malloc(sizeof(value));
+        strcpy(car[i].patente, value);
+        value = strtok(NULL, ",");
+        car[i].modelo = malloc(sizeof(value));
+        strcpy(car[i].modelo, value);
+        value = strtok(NULL, ",");
+        car[i].tipo = malloc(sizeof(value));
+        strcpy(car[i].tipo, value);
+        value = strtok(NULL, ",");
+        car[i].marca = malloc(sizeof(value));
+        strcpy(car[i].marca, value);
+        value = strtok(NULL, ",");
+        car[i].color = malloc(sizeof(value));
+        strcpy(car[i].color, value);
+        value = strtok(NULL, ",");
+        car[i].comuna = malloc(20);
+        strcpy(car[i].comuna, value);
+        value = strtok(NULL, ",");
+        i++;
+    }
 
-    int k = 0;
+    int j = 0;
     deudas = fopen("deudas.txt", "r");
-    while(k < d_lines){
-        // char *value2 = strtok(line2, ",");
-        // for (int j = 0; j < 3; j++){
-        fscanf(deudas, "%[^,],%[^,],%[^\n]\n", mult[k].patente, mult[k].monto, mult[k].paid);
-        // strcpy(mult[k].patente,mults.patente);
-        //     // printf("%s ", value2);
-        //     if (j == 0) mult[k].patente = value2;
-        //     else if (j == 1) mult[k].monto = atoi(value2);
-        //     else if (j == 2) mult[k].paid = value2;
-        //     value2 = strtok(NULL, ",");
-            // printf("%s ", mult[i].patente);
-        // printf("%s\n", mult[k].patente);
-        k ++;
-        }
+    while (fgets(line2, 100, deudas)){
+        char *value = strtok(line2, ",");
+        mult[j].patente = malloc(sizeof(value));
+        strcpy(mult[j].patente, value);
+        value = strtok(NULL, ",");
+        mult[j].monto = atoi(value);
+        value = strtok(NULL, ",");
+        mult[j].paid = malloc(sizeof(value));
+        strcpy(mult[j].paid, value);
+        value = strtok(NULL, ",");
+        j++;
+    }
 
-    // for (int i = 0; i < 190; i++) car[i].patente = "hola";
-    // for (int i = 190; i < 200; i++) car[i].patente = "chao";
+    //====================================================
 
-    for (int i = 0; i < d_lines; i++) printf("%s %d\n", mult[i].patente, mult[i].monto);// mult[i].paid);
-    // for(int i = 0; i < v_lines; i++){
-    //     printf("Auto %d:\npatente: %s | modelo: %s | tipo: %s | marca: %s | color: %s | comuna: %s======================== \n", i + 1, car[i].patente, car[i].modelo, car[i].tipo, car[i].marca, car[i].color, car[i].comuna);
-    // }
+    // int num;
+    // printf("Ingrese comando: ");
+    // // char *plate = malloc(10);
+    // scanf("%d ", &num);
 
-    //printf("%d ", d_lines); 
-    // for(int i = 0; i < d_lines; i++){
-    //    printf("Multas %d:\npatente: %s | monto: %s | pagado: %s\n======================== \n", i + 1, mult[i].patente, mult[i].monto, mult[i].paid);
-    // }
+    // printf("%d ", num);
+
+
+
+
+
+    //====================================================
+
+    for(int i = 0; i < v_lines; i++){
+        free(car[i].patente);
+        free(car[i].modelo);
+        free(car[i].tipo);
+        free(car[i].marca);
+        free(car[i].color);
+        free(car[i].comuna);
+    }
+
+    for(int i = 0; i < d_lines; i++){
+        free(mult[i].patente);
+        // free(mult[i].monto);
+        free(mult[i].paid);
+    }
+
     fclose(deudas);
     fclose(vehiculos);
+
     return 0;
 }
