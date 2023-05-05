@@ -81,18 +81,70 @@ int main(){
         j++;
     }
 
+    free(line);
+    free(line2);
+
     //====================================================
 
-    // int num;
-    // printf("Ingrese comando: ");
-    // // char *plate = malloc(10);
-    // scanf("%d ", &num);
+    while (1)
+    {   
+        char *cmd = malloc(100 * sizeof(char));
 
-    // printf("%d ", num);
+        printf("\nListado de comandos:\n- deuda [patente]\n- deuda [n]\n- deudores comuna [comuna]\n- deudores patente [string]\n- salir\n");
 
+        printf("Ingrese comando: ");
+        scanf(" %[^\n]s", cmd);
 
+        char *aux = malloc(100 * sizeof(char));
+        strcpy(aux, cmd);
 
+        char *word = strtok(aux, " ");
 
+        int flag = 1;
+        if (strcmp(word, "deuda") == 0){
+            word = strtok(NULL, " ");
+            int total = 0;
+
+            for (int i = 0; i < v_lines; i++){
+                if (strcmp(car[i].patente, word) == 0){
+                    for (int k = 0; k < d_lines; k++){
+                        if ((strcmp(mult[k].patente, word) == 0) && (strcmp(mult[k].paid, "No"))) {
+                            total += mult[k].monto;
+                            }
+                    }
+                flag = 0;
+                }
+            }
+            if (flag == 0) printf("\nDeuda total asociada a patente %s: %d\n", word, total);
+            else if (flag == 1){
+                continue; //Codigo para comando deuda [n] (agregar condicion para verificar comando?)
+            }
+        }
+        else if (strcmp(word, "deudores") == 0){
+
+            word = strtok(NULL, " ");
+
+            if (strcmp(word, "comuna") == 0){
+                word = strtok(NULL, " "); //<----------------- arreglar caso en que comuna tiene espacio
+                for (int c = 0; c < v_lines; c++){
+printf("%s, %s, %d\n", word, car[c].comuna, strcmp(car[c].comuna, word)); //testeando
+                    if (strcmp(car[c].comuna, word) == 0){
+                        for (int k = 0; k < d_lines; k++){
+                            if (strcmp(mult[k].patente, car[c].patente) == 0) printf("%s, %s, %s", mult[k].patente, car[c].comuna, word);
+                        }
+                    }
+                }    
+
+            }
+            else if (strcmp(word, "patente") == 0){
+                continue; //Codigo para comando deudores patente [patente]
+            }
+        }
+        else if (strcmp(word, "salir") == 0) break;
+        else{
+            printf("\nComando no identificado, intente nuevamente.\n");
+        };
+    }
 
     //====================================================
 
@@ -107,7 +159,6 @@ int main(){
 
     for(int i = 0; i < d_lines; i++){
         free(mult[i].patente);
-        // free(mult[i].monto);
         free(mult[i].paid);
     }
 
