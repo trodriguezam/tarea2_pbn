@@ -28,6 +28,7 @@ IAQE43,Civic,Moto,Honda,Verde,San Miguel
 RXJF67,Polo,Moto,Volkswagen,Amarillo,San Miguel
 PLAR77,Fiesta,Camion,Ford,Azul,Lo Espejo
 UOYZ67,Altima,Moto,Nissan,Amarillo,San Ramon
+AMLK31,City,Moto,Honda,Blanco,Pudahuel
 AMLK30,City,Moto,Honda,Blanco,Pudahuel
 SKVZ08,Corolla,Auto,Toyota,Verde,Quilicura
 DISZ33,Sentra,Camion,Nissan,Negro,La Pintana
